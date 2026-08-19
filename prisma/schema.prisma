@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  SUPER_ADMIN
+  EMPLOYEE
+}
+
+enum EmployeeStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model Employee {
+  id           String         @id @default(uuid())
+  name         String
+  email        String         @unique
+  passwordHash String         @map("password_hash")
+  phone        String?
+  role         Role
+  status       EmployeeStatus @default(ACTIVE)
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime       @updatedAt @map("updated_at")
+
+  Customer    Customer[]
+
+  @@map("employees")
+}
+enum EmailStatus {
+  PENDING
+  SENT
+  FAILED
+}
+model Customer {
+  id              String   @id @default(uuid())
+  firstName       String   @map("first_name")
+  middleName      String?  @map("middle_name")
+  lastName        String   @map("last_name")
+  age             Int
+  contactNumber1  String   @map("contact_number_1")
+  contactNumber2  String?  @map("contact_number_2")
+  email           String
+  emailStatus EmailStatus @default(PENDING) @map("email_status")
+  address         String
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  createdById     String   @map("created_by")
+  createdBy       Employee @relation(fields: [createdById], references: [id])
+
+  @@map("customers")
+}
