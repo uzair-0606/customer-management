@@ -38,7 +38,13 @@ export default function LoginPage() {
       return;
     }
 
-    
+    /*
+      Auth.js has successfully authenticated the user.
+
+      We now ask the session who the user is
+      so that we can redirect them to the
+      appropriate dashboard.
+    */
 
     const response = await fetch("/api/auth/session");
     const session = await response.json();

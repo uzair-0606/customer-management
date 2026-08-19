@@ -3,7 +3,10 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcrypt";
 
-/* GET /api/employees/[id] Get one employee by ID.
+/*
+ * GET /api/employees/[id]
+ *
+ * Get one employee by ID.
  */
 export async function GET(
   request: Request,
@@ -96,9 +99,9 @@ export async function GET(
 }
 
 /*
- PUT /api/employees/[id]
-
- Update employee information.
+ * PUT /api/employees/[id]
+ *
+ * Update employee information.
  */
 export async function PUT(
   request: Request,
@@ -182,8 +185,8 @@ export async function PUT(
     }
 
     /*
-      Check whether another employee
-      already uses this email.
+     * Check whether another employee
+     * already uses this email.
      */
     const emailOwner =
       await prisma.employee.findFirst({
@@ -234,8 +237,8 @@ export async function PUT(
     }
 
     /*
-      Only change password if a new password
-      was actually supplied.
+     * Only change password if a new password
+     * was actually supplied.
      */
   if (
   password &&
@@ -287,9 +290,9 @@ export async function PUT(
 }
 
 /*
-  DELETE /api/employees/[id]
- 
-  Delete an employee.
+ * DELETE /api/employees/[id]
+ *
+ * Delete an employee.
  */
 export async function DELETE(
   request: Request,

@@ -9,7 +9,9 @@ const resend = new Resend(
 );
 
 /*
-GET - Get all employees
+|--------------------------------------------------------------------------
+| GET - Get all employees
+|--------------------------------------------------------------------------
 */
 export async function GET() {
   try {
@@ -26,7 +28,7 @@ export async function GET() {
     }
 
     /*
-     Only SUPER_ADMIN can manage employees
+     * Only SUPER_ADMIN can manage employees
      */
     if (session.user.role !== "SUPER_ADMIN") {
       return NextResponse.json(
@@ -76,7 +78,9 @@ export async function GET() {
 }
 
 /*
- POST - Create employee
+|--------------------------------------------------------------------------
+| POST - Create employee
+|--------------------------------------------------------------------------
 */
 export async function POST(
   request: Request
@@ -85,7 +89,7 @@ export async function POST(
     const session = await auth();
 
     /*
-      Authentication
+     * Authentication
      */
     if (!session?.user) {
       return NextResponse.json(
@@ -98,7 +102,7 @@ export async function POST(
     }
 
     /*
-      Authorization
+     * Authorization
      */
     if (session.user.role !== "SUPER_ADMIN") {
       return NextResponse.json(
@@ -111,7 +115,7 @@ export async function POST(
     }
 
     /*
-      Read request body
+     * Read request body
      */
     const body = await request.json();
 
@@ -123,7 +127,7 @@ export async function POST(
     } = body;
 
     /*
-      Validate required fields
+     * Validate required fields
      */
     if (
       !name ||
@@ -141,7 +145,7 @@ export async function POST(
     }
 
     /*
-      Clean values
+     * Clean values
      */
     const cleanedName =
       String(name).trim();
@@ -159,7 +163,7 @@ export async function POST(
       String(password);
 
     /*
-      Validate name
+     * Validate name
      */
     if (cleanedName.length < 2) {
       return NextResponse.json(
@@ -173,7 +177,7 @@ export async function POST(
     }
 
     /*
-      Validate email
+     * Validate email
      */
     const emailRegex =
       /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -190,7 +194,7 @@ export async function POST(
     }
 
     /*
-      Validate password
+     * Validate password
      */
     if (plainPassword.length < 8) {
       return NextResponse.json(
@@ -204,7 +208,7 @@ export async function POST(
     }
 
     /*
-      Check whether employee already exists
+     * Check whether employee already exists
      */
     const existingEmployee =
       await prisma.employee.findUnique({
@@ -225,7 +229,7 @@ export async function POST(
     }
 
     /*
-      Hash password
+     * Hash password
      */
     const passwordHash =
       await bcrypt.hash(
@@ -234,10 +238,10 @@ export async function POST(
       );
 
     /*
-      Create employee
-     
-      Password is NEVER returned
-      from this API.
+     * Create employee
+     *
+     * Password is NEVER returned
+     * from this API.
      */
     const employee =
       await prisma.employee.create({
@@ -267,11 +271,11 @@ export async function POST(
       });
 
     /*
-      Send employee welcome email
-     
-      IMPORTANT:
-      Email failure does NOT undo
-      employee creation.
+     * Send employee welcome email
+     *
+     * IMPORTANT:
+     * Email failure does NOT undo
+     * employee creation.
      */
     try {
       if (
@@ -580,8 +584,8 @@ export async function POST(
       }
     } catch (emailError) {
       /*
-        Employee creation remains
-        successful even if email fails.
+       * Employee creation remains
+       * successful even if email fails.
        */
       console.error(
         "Employee email exception:",
@@ -590,7 +594,7 @@ export async function POST(
     }
 
     /*
-      Return employee
+     * Return employee
      */
     return NextResponse.json(
       {

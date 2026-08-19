@@ -201,7 +201,7 @@ export default function AddCustomerPage() {
     <div className="min-h-screen bg-slate-50">
       <Sidebar />
 
-      <main className="ml-64 min-h-screen p-8">
+      <main className="min-h-screen pt-20 p-4 sm:p-8 lg:ml-64 lg:pt-8">
         <div className="mx-auto max-w-6xl">
 
           {/* Header */}
@@ -245,9 +245,9 @@ export default function AddCustomerPage() {
             className="space-y-6"
           >
 
-          
+            {/* ================================= */}
             {/* PERSONAL INFORMATION */}
-           
+            {/* ================================= */}
 
             <Card className="gap-0 overflow-hidden py-0">
 
@@ -404,9 +404,9 @@ export default function AddCustomerPage() {
               </CardContent>
             </Card>
 
-            
+            {/* ================================= */}
             {/* CONTACT INFORMATION */}
-          
+            {/* ================================= */}
 
             <Card className="gap-0 overflow-hidden py-0">
 
@@ -534,9 +534,9 @@ export default function AddCustomerPage() {
               </CardContent>
             </Card>
 
-       
+            {/* ================================= */}
             {/* ADDRESS */}
-      
+            {/* ================================= */}
 
             <Card className="gap-0 overflow-hidden py-0">
 
@@ -583,9 +583,9 @@ export default function AddCustomerPage() {
               </CardContent>
             </Card>
 
-            
+            {/* ================================= */}
             {/* FOOTER ACTIONS */}
-         
+            {/* ================================= */}
 
             <Card className="flex-row items-center justify-between py-5">
 

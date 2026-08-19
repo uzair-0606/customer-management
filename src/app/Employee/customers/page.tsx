@@ -150,11 +150,11 @@ export default function EmployeeCustomersPage() {
     <div className="min-h-screen bg-slate-50">
       <EmployeeSidebar />
 
-      <main className="ml-64 min-h-screen p-8">
+      <main className="min-h-screen pt-20 p-4 sm:p-8 lg:ml-64 lg:pt-8">
         <div className="mx-auto max-w-7xl">
 
           {/* Header */}
-          <header className="mb-8 flex items-start justify-between">
+          <header className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <p className="text-sm font-semibold uppercase tracking-wide text-blue-600">
                 Employee
@@ -372,7 +372,7 @@ export default function EmployeeCustomersPage() {
               {/* Pagination */}
               {filteredCustomers.length > 0 &&
                 totalPages > 1 && (
-                  <div className="mt-6 flex items-center justify-between">
+                  <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
 
                     <p className="text-sm text-slate-500">
                       Page{" "}

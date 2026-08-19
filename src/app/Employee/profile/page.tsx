@@ -58,7 +58,10 @@ export default function EmployeeProfilePage() {
   const [error, setError] =
     useState("");
 
-  /* LOAD PROFILE
+  /*
+   * ----------------------------------------------------
+   * LOAD PROFILE
+   * ----------------------------------------------------
    */
 
   const fetchProfile = async () => {
@@ -110,7 +113,11 @@ export default function EmployeeProfilePage() {
     fetchProfile();
   }, []);
 
-  /* SAVE PROFILE*/
+  /*
+   * ----------------------------------------------------
+   * SAVE PROFILE
+   * ----------------------------------------------------
+   */
 
   const handleSaveProfile = async () => {
     setError("");
@@ -184,7 +191,10 @@ export default function EmployeeProfilePage() {
     }
   };
 
-  /* CHANGE PASSWORD 
+  /*
+   * ----------------------------------------------------
+   * CHANGE PASSWORD
+   * ----------------------------------------------------
    */
 
   const handleChangePassword = async () => {
@@ -274,7 +284,10 @@ export default function EmployeeProfilePage() {
     }
   };
 
-  /* LOADING
+  /*
+   * ----------------------------------------------------
+   * LOADING
+   * ----------------------------------------------------
    */
 
   if (loading) {
@@ -282,7 +295,7 @@ export default function EmployeeProfilePage() {
       <div className="min-h-screen bg-slate-50">
         <EmployeeSidebar />
 
-        <main className="ml-64 p-8">
+        <main className="pt-20 p-4 sm:p-8 lg:ml-64 lg:pt-8">
           <Card className="space-y-4 p-10">
             <Skeleton className="h-4 w-1/3" />
             <Skeleton className="h-4 w-1/2" />
@@ -293,14 +306,18 @@ export default function EmployeeProfilePage() {
     );
   }
 
-  /*PAGE*/
+  /*
+   * ----------------------------------------------------
+   * PAGE
+   * ----------------------------------------------------
+   */
 
   return (
     <div className="min-h-screen bg-slate-50">
 
       <EmployeeSidebar />
 
-      <main className="ml-64 p-8">
+      <main className="pt-20 p-4 sm:p-8 lg:ml-64 lg:pt-8">
 
         {/* Header */}
 

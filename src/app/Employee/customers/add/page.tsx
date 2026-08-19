@@ -128,7 +128,7 @@ export default function EmployeeAddCustomerPage() {
     <div className="min-h-screen bg-slate-50">
       <EmployeeSidebar />
 
-      <main className="ml-64 p-8">
+      <main className="pt-20 p-4 sm:p-8 lg:ml-64 lg:pt-8">
         {/* Page Header */}
         <header className="mb-8">
           <p className="text-sm font-medium text-blue-600">
@@ -349,7 +349,7 @@ export default function EmployeeAddCustomerPage() {
             <Separator />
 
             {/* Actions */}
-            <CardContent className="flex justify-end gap-3">
+            <CardContent className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
               {/* Cancel */}
               <Button
                 type="button"

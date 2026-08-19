@@ -65,7 +65,11 @@ export default function EmployeeEditCustomerPage() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  /* Fetch customer*/
+  /*
+  |--------------------------------------------------------------------------
+  | Fetch customer
+  |--------------------------------------------------------------------------
+  */
   useEffect(() => {
     if (!customerId) {
       setError("Invalid customer ID.");
@@ -145,7 +149,11 @@ export default function EmployeeEditCustomerPage() {
     fetchCustomer();
   }, [customerId]);
 
-  /* Update form field */
+  /*
+  |--------------------------------------------------------------------------
+  | Update form field
+  |--------------------------------------------------------------------------
+  */
   const updateField = (
     field: keyof CustomerForm,
     value: string
@@ -159,7 +167,11 @@ export default function EmployeeEditCustomerPage() {
     setSuccess("");
   };
 
-  /* Save customer */
+  /*
+  |--------------------------------------------------------------------------
+  | Save customer
+  |--------------------------------------------------------------------------
+  */
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
   ) => {
@@ -169,7 +181,7 @@ export default function EmployeeEditCustomerPage() {
     setSuccess("");
 
     /*
-      Basic validation
+     * Basic validation
      */
     if (
       !form.firstName.trim() ||
@@ -187,7 +199,7 @@ export default function EmployeeEditCustomerPage() {
     }
 
     /*
-      Validate age
+     * Validate age
      */
     const numericAge = Number(form.age);
 
@@ -204,7 +216,7 @@ export default function EmployeeEditCustomerPage() {
     }
 
     /*
-      Validate email
+     * Validate email
      */
     const emailRegex =
       /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -281,8 +293,8 @@ export default function EmployeeEditCustomerPage() {
       );
 
       /*
-       Give the user a moment to see the
-       success message, then return to details.
+       * Give the user a moment to see the
+       * success message, then return to details.
        */
       setTimeout(() => {
         router.push(
@@ -307,13 +319,17 @@ export default function EmployeeEditCustomerPage() {
     }
   };
 
-  /* Loading */
+  /*
+  |--------------------------------------------------------------------------
+  | Loading
+  |--------------------------------------------------------------------------
+  */
   if (loading) {
     return (
       <div className="min-h-screen bg-slate-50">
         <EmployeeSidebar />
 
-        <main className="ml-64 p-8">
+        <main className="pt-20 p-4 sm:p-8 lg:ml-64 lg:pt-8">
           <Card className="p-10">
             <div className="space-y-4">
               <Skeleton className="h-4 w-1/3" />
@@ -326,13 +342,17 @@ export default function EmployeeEditCustomerPage() {
     );
   }
 
-  /* Error while loading customer */
+  /*
+  |--------------------------------------------------------------------------
+  | Error while loading customer
+  |--------------------------------------------------------------------------
+  */
   if (error && !form.firstName) {
     return (
       <div className="min-h-screen bg-slate-50">
         <EmployeeSidebar />
 
-        <main className="ml-64 p-8">
+        <main className="pt-20 p-4 sm:p-8 lg:ml-64 lg:pt-8">
           <Card className="p-8 text-center">
             <h1 className="text-xl font-semibold text-slate-900">
               Unable to load customer
@@ -356,10 +376,10 @@ export default function EmployeeEditCustomerPage() {
     <div className="min-h-screen bg-slate-50">
       <EmployeeSidebar />
 
-      <main className="ml-64 p-8">
+      <main className="pt-20 p-4 sm:p-8 lg:ml-64 lg:pt-8">
 
         {/* Header */}
-        <header className="mb-8 flex items-start justify-between">
+        <header className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <p className="text-sm font-medium text-blue-600">
               Employee
@@ -617,7 +637,7 @@ export default function EmployeeEditCustomerPage() {
             <Separator />
 
             {/* Actions */}
-            <CardContent className="flex justify-end gap-3">
+            <CardContent className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
 
               <Button
                 render={<Link href={`/Employee/customers/${customerId}`} />}

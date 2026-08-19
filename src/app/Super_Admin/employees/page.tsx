@@ -277,9 +277,9 @@ export default function EmployeesPage() {
     <div className="min-h-screen bg-slate-50">
       <Sidebar />
 
-      <main className="ml-64 p-8">
+      <main className="pt-20 p-4 sm:p-8 lg:ml-64 lg:pt-8">
         {/* Header */}
-        <header className="mb-8 flex items-start justify-between">
+        <header className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <p className="text-sm font-medium text-blue-600">
               Super Admin

@@ -8,7 +8,11 @@ type RouteContext = {
   }>;
 };
 
-/* Check authentication and employee authorization */
+/*
+|--------------------------------------------------------------------------
+| Check authentication and employee authorization
+|--------------------------------------------------------------------------
+*/
 async function getAuthorizedEmployee() {
   const session = await auth();
 
@@ -22,9 +26,9 @@ async function getAuthorizedEmployee() {
   }
 
   /*
-    Get the actual employee from the database.
-   
-    Your Prisma schema uses Employee, not User.
+   * Get the actual employee from the database.
+   *
+   * Your Prisma schema uses Employee, not User.
    */
   const employee = await prisma.employee.findUnique({
     where: {
@@ -48,7 +52,9 @@ async function getAuthorizedEmployee() {
     };
   }
 
-  /* Only active employees/admins can access customers. */
+  /*
+   * Only active employees/admins can access customers.
+   */
   if (employee.status !== "ACTIVE") {
     return {
       authorized: false,
@@ -58,7 +64,9 @@ async function getAuthorizedEmployee() {
     };
   }
 
-  /* Both roles are allowed to manage customers.*/
+  /*
+   * Both roles are allowed to manage customers.
+   */
   if (
     employee.role !== "SUPER_ADMIN" &&
     employee.role !== "EMPLOYEE"
@@ -79,7 +87,11 @@ async function getAuthorizedEmployee() {
   };
 }
 
-/* GET - Get single customer */
+/*
+|--------------------------------------------------------------------------
+| GET - Get single customer
+|--------------------------------------------------------------------------
+*/
 export async function GET(
   request: Request,
   context: RouteContext
@@ -159,7 +171,11 @@ export async function GET(
   }
 }
 
-/* PUT - Update single customer */
+/*
+|--------------------------------------------------------------------------
+| PUT - Update single customer
+|--------------------------------------------------------------------------
+*/
 export async function PUT(
   request: Request,
   context: RouteContext
@@ -205,7 +221,9 @@ export async function PUT(
       address,
     } = body;
 
-    /* Validate required fields*/
+    /*
+     * Validate required fields
+     */
     if (
       !firstName ||
       !lastName ||
@@ -224,7 +242,9 @@ export async function PUT(
       );
     }
 
-    /* Validate age */
+    /*
+     * Validate age
+     */
     const numericAge = Number(age);
 
     if (
@@ -241,7 +261,9 @@ export async function PUT(
       );
     }
 
-    /* Check that customer exists */
+    /*
+     * Check that customer exists
+     */
     const existingCustomer =
       await prisma.customer.findUnique({
         where: {
@@ -259,7 +281,9 @@ export async function PUT(
       );
     }
 
-    /* Update customer */
+    /*
+     * Update customer
+     */
     const customer =
       await prisma.customer.update({
         where: {
@@ -332,7 +356,11 @@ export async function PUT(
   }
 }
 
-/* DELETE - Delete single customer */
+/*
+|--------------------------------------------------------------------------
+| DELETE - Delete single customer
+|--------------------------------------------------------------------------
+*/
 export async function DELETE(
   request: Request,
   context: RouteContext
@@ -365,7 +393,9 @@ export async function DELETE(
       );
     }
 
-    /* Check that customer exists*/
+    /*
+     * Check that customer exists
+     */
     const existingCustomer =
       await prisma.customer.findUnique({
         where: {
@@ -383,7 +413,9 @@ export async function DELETE(
       );
     }
 
-    /* Delete customer */
+    /*
+     * Delete customer
+     */
     await prisma.customer.delete({
       where: {
         id,

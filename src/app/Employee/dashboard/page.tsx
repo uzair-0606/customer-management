@@ -35,7 +35,7 @@ export default async function EmployeeDashboardPage() {
   const employeeId = session.user.id;
 
   /*
-   Get employee's customers
+   * Get employee's customers
    */
   const customers = await prisma.customer.findMany({
     where: {
@@ -50,7 +50,7 @@ export default async function EmployeeDashboardPage() {
   });
 
   /*
-    Total customers created by employee
+   * Total customers created by employee
    */
   const totalCustomers =
     await prisma.customer.count({
@@ -60,7 +60,7 @@ export default async function EmployeeDashboardPage() {
     });
 
   /*
-    Customers added today
+   * Customers added today
    */
   const startOfToday = new Date();
   startOfToday.setHours(0, 0, 0, 0);
@@ -81,7 +81,7 @@ export default async function EmployeeDashboardPage() {
     });
 
   /*
-    Customer full name
+   * Customer full name
    */
   const getCustomerName = (
     customer: {
@@ -105,7 +105,7 @@ export default async function EmployeeDashboardPage() {
       {/* Employee Sidebar */}
       <EmployeeSidebar />
 
-      <main className="ml-64 p-8">
+      <main className="pt-20 p-4 sm:p-8 lg:ml-64 lg:pt-8">
 
         {/* Header */}
         <header className="mb-8">

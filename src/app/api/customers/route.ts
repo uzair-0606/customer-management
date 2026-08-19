@@ -6,8 +6,10 @@ import { Resend } from "resend";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 /*
-
- GET - Get customers */
+|--------------------------------------------------------------------------
+| GET - Get customers
+|--------------------------------------------------------------------------
+*/
 export async function GET() {
   try {
     const session = await auth();
@@ -36,11 +38,11 @@ export async function GET() {
     }
 
     /*
-      SUPER_ADMIN:
-      Can see all customers.
-     
-      EMPLOYEE:
-      Can only see customers created by themselves.
+     * SUPER_ADMIN:
+     * Can see all customers.
+     *
+     * EMPLOYEE:
+     * Can only see customers created by themselves.
      */
     const where =
       session.user.role === "EMPLOYEE"
@@ -74,15 +76,16 @@ export async function GET() {
 }
 
 /*
- POST - Create customer
-
+|--------------------------------------------------------------------------
+| POST - Create customer
+|--------------------------------------------------------------------------
 */
 export async function POST(request: Request) {
   try {
     const session = await auth();
 
     /*
-      Authentication
+     * Authentication
      */
     if (!session?.user) {
       return NextResponse.json(
@@ -95,7 +98,7 @@ export async function POST(request: Request) {
     }
 
     /*
-      Authorization
+     * Authorization
      */
     if (
       session.user.role !== "SUPER_ADMIN" &&
@@ -111,7 +114,7 @@ export async function POST(request: Request) {
     }
 
     /*
-      Read request body
+     * Read request body
      */
     const body = await request.json();
 
@@ -127,7 +130,7 @@ export async function POST(request: Request) {
     } = body;
 
     /*
-      Validate required fields
+     * Validate required fields
      */
     if (
       !firstName ||
@@ -147,7 +150,7 @@ export async function POST(request: Request) {
     }
 
     /*
-      Validate age
+     * Validate age
      */
     const parsedAge = Number(age);
 
@@ -166,7 +169,7 @@ export async function POST(request: Request) {
     }
 
     /*
-      Clean values
+     * Clean values
      */
     const cleanedFirstName = String(firstName).trim();
 
@@ -189,7 +192,7 @@ export async function POST(request: Request) {
     const cleanedAddress = String(address).trim();
 
     /*
-     Basic email validation
+     * Basic email validation
      */
     const emailRegex =
       /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -205,10 +208,10 @@ export async function POST(request: Request) {
     }
 
     /*
-      Create customer in Neon/PostgreSQL
-     
-      emailStatus automatically starts as PENDING
-      because of the schema default.
+     * Create customer in Neon/PostgreSQL
+     *
+     * emailStatus automatically starts as PENDING
+     * because of the Prisma schema default.
      */
     const customer = await prisma.customer.create({
       data: {
@@ -221,17 +224,24 @@ export async function POST(request: Request) {
         email: cleanedEmail,
         address: cleanedAddress,
 
-        /* Automatically assign the currently logged-in employee or super admin.
+        /*
+         * Automatically assign the currently
+         * logged-in employee or super admin.
          */
         createdById: session.user.id,
       },
     });
 
-    /*Send confirmation emai IMPORTANT Email failure will NOT delete or rollbac the customer.
+    /*
+     * Send confirmation email
+     *
+     * IMPORTANT:
+     * Email failure will NOT delete or rollback
+     * the customer.
      */
     try {
       /*
-   Check whether Resend is configured.
+       * Check whether Resend is configured.
        */
       if (
         process.env.RESEND_API_KEY &&
@@ -450,7 +460,7 @@ export async function POST(request: Request) {
           });
 
         /*
-       EMAIL FAILED
+         * EMAIL FAILED
          */
         if (emailError) {
           console.error(
@@ -468,7 +478,7 @@ export async function POST(request: Request) {
           });
         } else {
           /*
-           EMAIL SENT SUCCESSFULLY
+           * EMAIL SENT SUCCESSFULLY
            */
           await prisma.customer.update({
             where: {
@@ -485,7 +495,7 @@ export async function POST(request: Request) {
         }
       } else {
         /*
-          EMAIL CONFIGURATION MISSING
+         * EMAIL CONFIGURATION MISSING
          */
         console.warn(
           "Resend email not configured. Customer was created without sending an email."
@@ -502,9 +512,10 @@ export async function POST(request: Request) {
       }
     } catch (emailError) {
       /*
-        Unexpected email failure.
-       Customer creation should NOT fail
-       because of email failure.
+       * Unexpected email failure.
+       *
+       * Customer creation should NOT fail
+       * because of email failure.
        */
       console.error(
         "Customer confirmation email failed:",
@@ -522,12 +533,12 @@ export async function POST(request: Request) {
     }
 
     /*
-      Fetch the customer again after the email
-      status has been updated.
-     
-      This ensures the API response contains
-      SENT or FAILED instead of the original
-      PENDING value.
+     * Fetch the customer again after the email
+     * status has been updated.
+     *
+     * This ensures the API response contains
+     * SENT or FAILED instead of the original
+     * PENDING value.
      */
     const updatedCustomer =
       await prisma.customer.findUnique({
@@ -537,7 +548,7 @@ export async function POST(request: Request) {
       });
 
     /*
-     Return successful response
+     * Return successful response
      */
     return NextResponse.json(
       {

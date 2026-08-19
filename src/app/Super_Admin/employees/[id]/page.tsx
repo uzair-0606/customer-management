@@ -26,7 +26,7 @@ export default async function EmployeeDetailsPage({
       <div className="min-h-screen bg-slate-50">
         <Sidebar />
 
-        <main className="ml-64 p-8">
+        <main className="pt-20 p-4 sm:p-8 lg:ml-64 lg:pt-8">
           <h1 className="text-2xl font-bold text-slate-900">
             Unauthorized
           </h1>
@@ -50,7 +50,7 @@ export default async function EmployeeDetailsPage({
       <div className="min-h-screen bg-slate-50">
         <Sidebar />
 
-        <main className="ml-64 p-8">
+        <main className="pt-20 p-4 sm:p-8 lg:ml-64 lg:pt-8">
           <h1 className="text-2xl font-bold text-slate-900">
             Access Denied
           </h1>
@@ -90,7 +90,7 @@ export default async function EmployeeDetailsPage({
       <div className="min-h-screen bg-slate-50">
         <Sidebar />
 
-        <main className="ml-64 p-8">
+        <main className="pt-20 p-4 sm:p-8 lg:ml-64 lg:pt-8">
           <h1 className="text-2xl font-bold text-slate-900">
             Employee Not Found
           </h1>
@@ -118,7 +118,7 @@ export default async function EmployeeDetailsPage({
     <div className="min-h-screen bg-slate-50">
       <Sidebar />
 
-      <main className="ml-64 p-8">
+      <main className="pt-20 p-4 sm:p-8 lg:ml-64 lg:pt-8">
 
         {/* Header */}
         <header className="mb-8">
@@ -273,7 +273,7 @@ export default async function EmployeeDetailsPage({
           </Card>
 
           {/* Actions */}
-          <div className="flex justify-end gap-3">
+          <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
 
             <Button
               render={<Link href="/Super_Admin/employees" />}

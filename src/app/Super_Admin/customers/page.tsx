@@ -62,8 +62,9 @@ export default function CustomersPage() {
     useState("");
 
   /*
-    Email Status
-    Empty string = All statuses
+   * Email Status
+   *
+   * Empty string = All statuses
    */
   const [emailStatus, setEmailStatus] =
     useState<EmailStatus | "">("");
@@ -74,7 +75,11 @@ export default function CustomersPage() {
 
   const customersPerPage = 10;
 
-  /*Get customers*/
+  /*
+  |--------------------------------------------------------------------------
+  | Get customers
+  |--------------------------------------------------------------------------
+  */
   const fetchCustomers = async () => {
     try {
       setLoading(true);
@@ -115,7 +120,11 @@ export default function CustomersPage() {
     }
   };
 
-  /*Get employees*/
+  /*
+  |--------------------------------------------------------------------------
+  | Get employees
+  |--------------------------------------------------------------------------
+  */
   const fetchEmployees = async () => {
     try {
       setEmployeeLoading(true);
@@ -137,8 +146,8 @@ export default function CustomersPage() {
       }
 
       /*
-        Only active EMPLOYEE accounts
-        are shown in the customer filter.
+       * Only active EMPLOYEE accounts
+       * are shown in the customer filter.
        */
       const employeeList: Employee[] =
         (data.employees || []).filter(
@@ -155,8 +164,8 @@ export default function CustomersPage() {
       );
 
       /*
-        Employee loading failure should
-        not prevent customers from loading.
+       * Employee loading failure should
+       * not prevent customers from loading.
        */
       setEmployees([]);
     } finally {
@@ -164,13 +173,21 @@ export default function CustomersPage() {
     }
   };
 
-  /*Load customers + employees*/
+  /*
+  |--------------------------------------------------------------------------
+  | Load customers + employees
+  |--------------------------------------------------------------------------
+  */
   useEffect(() => {
     fetchCustomers();
     fetchEmployees();
   }, []);
 
-  /* Full customer name */
+  /*
+  |--------------------------------------------------------------------------
+  | Full customer name
+  |--------------------------------------------------------------------------
+  */
   const getCustomerName = (
     customer: Customer
   ) => {
@@ -183,7 +200,11 @@ export default function CustomersPage() {
       .join(" ");
   };
 
-  /* Customer created date */
+  /*
+  |--------------------------------------------------------------------------
+  | Customer created date
+  |--------------------------------------------------------------------------
+  */
   const getCustomerDate = (
     customer: Customer
   ) => {
@@ -192,7 +213,11 @@ export default function CustomersPage() {
       .split("T")[0];
   };
 
-  /* Search + Filters */
+  /*
+  |--------------------------------------------------------------------------
+  | Search + Filters
+  |--------------------------------------------------------------------------
+  */
   const filteredCustomers = useMemo(() => {
     return customers.filter((customer) => {
       const searchValue =
@@ -220,7 +245,7 @@ export default function CustomersPage() {
         );
 
       /*
-        Search
+       * Search
        */
       const matchesSearch =
         !searchValue ||
@@ -238,33 +263,34 @@ export default function CustomersPage() {
         );
 
       /*
-        Exact Date
+       * Exact Date
        */
       const matchesDate =
         !date ||
         customerDate === date;
 
       /*
-        From Date
+       * From Date
        */
       const matchesStartDate =
         !startDate ||
         customerDate >= startDate;
 
       /*
-        To Date
+       * To Date
        */
       const matchesEndDate =
         !endDate ||
         customerDate <= endDate;
 
       /*
-        Employee
-      The dropdown stores the
-        actual employee ID.
-       
-        Customer.createdById also
-        stores the employee ID.
+       * Employee
+       *
+       * The dropdown stores the
+       * actual employee ID.
+       *
+       * Customer.createdById also
+       * stores the employee ID.
        */
       const matchesEmployee =
         !employee ||
@@ -272,7 +298,7 @@ export default function CustomersPage() {
           employee;
 
       /*
-        Email Status
+       * Email Status
        */
       const matchesEmailStatus =
         !emailStatus ||
@@ -299,8 +325,10 @@ export default function CustomersPage() {
   ]);
 
   /*
-   Pagination
-*/
+  |--------------------------------------------------------------------------
+  | Pagination
+  |--------------------------------------------------------------------------
+  */
   const totalPages = Math.max(
     1,
     Math.ceil(
@@ -327,7 +355,9 @@ export default function CustomersPage() {
     );
 
   /*
-   Delete customer
+  |--------------------------------------------------------------------------
+  | Delete customer
+  |--------------------------------------------------------------------------
   */
   const handleDeleteCustomer =
     async (
@@ -376,7 +406,10 @@ export default function CustomersPage() {
       }
     };
 
-  /* Clear filters
+  /*
+  |--------------------------------------------------------------------------
+  | Clear filters
+  |--------------------------------------------------------------------------
   */
   const clearFilters = () => {
     setSearch("");
@@ -389,7 +422,9 @@ export default function CustomersPage() {
   };
 
   /*
-  Export
+  |--------------------------------------------------------------------------
+  | Export
+  |--------------------------------------------------------------------------
   */
   const handleExport = () => {
     const emailStatusLabel =
@@ -467,10 +502,10 @@ export default function CustomersPage() {
     <div className="min-h-screen bg-slate-50">
       <Sidebar />
 
-      <main className="ml-64 p-8">
+      <main className="pt-20 p-4 sm:p-8 lg:ml-64 lg:pt-8">
 
         {/* Header */}
-        <header className="mb-8 flex items-start justify-between">
+        <header className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <p className="text-sm font-medium text-blue-600">
               Super Admin
@@ -485,7 +520,7 @@ export default function CustomersPage() {
             </p>
           </div>
 
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3">
 
             {/* Export */}
             <Button
